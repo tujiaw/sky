@@ -1,24 +1,22 @@
 #include <iostream>
-#include <uv.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include "Timer.h"
 
-void timer_cb(uv_timer_t *handle)
+void hello()
 {
-	std::cout << "111" << std::endl;
-
+	std::cout << "hello" << std::endl;
 }
 
 int main(int argc, char *argv[])
 {
-	std::cout << "hell, world!" << std::endl;
+	Loop loop;
 
-	uv_timer_t handle;
-	uv_timer_init(uv_default_loop(), &handle);
-	uv_timer_start(&handle, timer_cb, 3000, 2);
-
-	uv_run(uv_default_loop(), UV_RUN_DEFAULT);
-
+	Timer t(loop);
+	t.setCallback(hello);
+	t.start(1000);
+	
+	loop.run();
 
 	std::cout << "bye bye" << std::endl;
 	getchar();
